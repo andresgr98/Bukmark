@@ -7,7 +7,7 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "deploy": "nuxt build && firebase deploy"
+    "deploy": "git push heroku main"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.1",

@@ -78,7 +78,7 @@ export default {
         let bookTitleParsed = this.bookTitle.split(" ").join("+");
         this.searchResult = [];
         const response = await axios.get(
-          `http://openlibrary.org/search.json?title=${bookTitleParsed}`
+          `https://openlibrary.org/search.json?title=${bookTitleParsed}`
         );
         this.searchResult.push(response.data.docs.slice(0, 10));
         this.isContent = true;
