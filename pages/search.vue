@@ -97,7 +97,7 @@ export default {
       if (cover_i === undefined) {
         return "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081";
       }
-      let image = `http://covers.openlibrary.org/b/id/${cover_i}-M.jpg`;
+      let image = `https://covers.openlibrary.org/b/id/${cover_i}-M.jpg`;
       console.log(image);
       return image;
     },
