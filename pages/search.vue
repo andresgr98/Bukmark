@@ -83,10 +83,10 @@ export default {
         this.searchResult.push(response.data.docs.slice(0, 10));
         this.isContent = true;
         this.searchError = false
-        if(this.searchResult.length === 1){
+        if(this.searchResult[0].length === 0){
           this.searchError = true
         }
-        console.log(this.searchResult);
+        console.log('searchResult array: ', this.searchResult);
       } catch (error) {
         console.error(error);
         this.searchError = true
