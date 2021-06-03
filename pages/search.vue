@@ -80,7 +80,7 @@ export default {
         const response = await axios.get(
           `https://openlibrary.org/search.json?title=${bookTitleParsed}`
         );
-        this.searchResult.push(response.data.docs.slice(0, 10));
+        this.searchResult.push(response.data.docs.slice(0, 10));    // no hagas push, iguala searchResult a response.data.docs..... y implementa los cambios en los demas sitios
         this.isContent = true;
         this.searchError = false
         if(this.searchResult[0].length === 0){
