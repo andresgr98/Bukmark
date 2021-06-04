@@ -3,10 +3,11 @@
     <div class="columns is-vcentered  is-multiline">
       <div class="column is-one-fifth" id="image-column">
         <figure class="image">
-          <b-image
+          <img
             :src="image"
             placeholder="https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081"
-          ></b-image>
+            id="bookImgBookCard"
+          >
         </figure>
       </div>
       <div class="column is-two-fifths">
@@ -50,5 +51,8 @@ export default {
 <style>
 #image-column{
   vertical-align: middle;
+}
+#bookImgBookCard{
+  border-radius: 6px;
 }
 </style>

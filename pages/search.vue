@@ -26,11 +26,11 @@
 
         <div class="column">
           <bookCard
-          v-for="(result, index) in searchResult[0]"
+          v-for="(result, index) in searchResult"
           :key="index"
-          :title="searchResult[0][index].title"
-          :author="searchResult[0][index].author_name[0]"
-          :image="getImage(searchResult[0][index].cover_i)"
+          :title="searchResult[index].title"
+          :author="searchResult[index].author_name[0]"
+          :image="getImage(searchResult[index].cover_i)"
         ></bookCard>
         </div>
 
@@ -80,7 +80,8 @@ export default {
         const response = await axios.get(
           `https://openlibrary.org/search.json?title=${bookTitleParsed}`
         );
-        this.searchResult.push(response.data.docs.slice(0, 10));    // no hagas push, iguala searchResult a response.data.docs..... y implementa los cambios en los demas sitios
+        this.searchResult = response.data.docs.slice(0, 15)
+        console.log (this.searchResult)
         this.isContent = true;
         this.searchError = false
         if(this.searchResult[0].length === 0){
@@ -98,7 +99,6 @@ export default {
         return "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081";
       }
       let image = `https://covers.openlibrary.org/b/id/${cover_i}-M.jpg`;
-      console.log(image);
       return image;
     },
 
