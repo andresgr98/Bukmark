@@ -16,8 +16,8 @@
             <b-navbar-item tag="nuxt-link" :to="{ path: '/search' }">
                 Búsqueda
             </b-navbar-item>
-            <b-navbar-item tag="nuxt-link" :to="{ path: '/to-be-read' }">
-                Lista de lectura
+            <b-navbar-item tag="nuxt-link" :to="{ path: '/collections' }">
+                Colecciones
             </b-navbar-item>
             <b-navbar-item tag="nuxt-link" :to="{ path: '/search' }">
                 Biblioteca

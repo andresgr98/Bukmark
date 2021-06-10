@@ -1,11 +1,12 @@
 <template>
   <div id="pill-container">
     <img
-      src="https://m.media-amazon.com/images/I/51Qh9KpS2CL.jpg"
+      :src="cover"
       alt=""
       id="img"
     />
     <p class="title is-5 is-centered">{{title}}</p>
+    <b-button class="is-danger" @click="deleteFromCollection">Eliminar de la colección</b-button>
   </div>
 </template>
 
@@ -13,7 +14,13 @@
 export default {
   name: "book-pill",
   props: {
-    title: String
+    title: String,
+    cover: String
+  },
+  methods: {
+    deleteFromCollection(){
+      this.$emit()
+    }
   }
 };
 </script>
