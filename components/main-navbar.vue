@@ -19,19 +19,22 @@
             <b-navbar-item tag="nuxt-link" :to="{ path: '/collections' }">
                 Colecciones
             </b-navbar-item>
-            <b-navbar-item tag="nuxt-link" :to="{ path: '/search' }">
-                Biblioteca
+            <b-navbar-item tag="nuxt-link" :to="{ path: '/' }">
+                Amigos
             </b-navbar-item>
         </template>
 
         <template #end>
             <b-navbar-item tag="div">
                 <div class="buttons">
-                    <b-button rounded class=" is-primary" tag="nuxt-link" :to="{ path: '/search' }">
+                    <b-button rounded class=" is-primary" tag="nuxt-link" :to="{ path: '/register' }" v-if="!isAuth">
                         <strong>Registrarse</strong>
                     </b-button>
-                    <b-button rounded class=" is-light">
+                    <b-button rounded class=" is-light" tag="nuxt-link" :to="{ path: '/login' }" v-if="!isAuth">
                         Iniciar sesión
+                    </b-button>
+                    <b-button rounded class=" is-light" tag="nuxt-link" :to="{ path: '/profile' }" v-if="isAuth">
+                        {{currentUser.firstname}}
                     </b-button>
                 </div>
             </b-navbar-item>
@@ -41,7 +44,16 @@
 
 <script>
 export default {
-  name: "mainNavbar"
+  name: "mainNavbar",
+  computed: {
+    isAuth() {
+      return this.$store.getters.isAuth
+    },
+    currentUser() {
+      return this.$store.getters.currentUser
+    },
+
+  }
 }
 </script>
 

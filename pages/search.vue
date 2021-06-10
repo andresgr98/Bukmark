@@ -31,6 +31,7 @@
           :title="searchResult[index].title"
           :author="searchResult[index].author_name[0]"
           :image="getImage(searchResult[index].cover_i)"
+          :book="searchResult[index]"
         ></bookCard>
         </div>
 
@@ -81,7 +82,6 @@ export default {
           `https://openlibrary.org/search.json?title=${bookTitleParsed}`
         );
         this.searchResult = response.data.docs.slice(0, 15)
-        console.log (this.searchResult)
         this.isContent = true;
         this.searchError = false
         if(this.searchResult[0].length === 0){

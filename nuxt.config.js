@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Bukmark',
+    titleTemplate: '%s - Bukmark',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -19,7 +19,10 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/api/index.js',
+    //{src: '~/plugins/vue-cookie-law', mode: 'client'}
   ],
+
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -36,7 +39,12 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    'cookie-universal-nuxt',
+
   ],
+
+    router: { middleware: ['authenticated']},
+
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
@@ -44,15 +52,16 @@ export default {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
+      name: 'Bukmark',
       lang: 'es'
     },
     icon: {
       source: "@/static/icon.png",
       fileName: "icon.png"
     },
-    meta: {
-
-    }
+  },
+  env: {
+    baseURL: 'http://localhost:8080/'
   },
 
   server: {

@@ -44,7 +44,13 @@ export default {
     title: String,
     author: String,
     description: String,
+    book: Object
   },
+  methods: {
+    addToCollection(){
+      
+    }
+  }
 };
 </script>
 
