@@ -1,8 +1,8 @@
 <template>
   <div class="box">
-    <img src="https://image.freepik.com/free-vector/illustration-folder-icon_53876-5845.jpg" alt="">
-    {{collection.title}}
-    <b-button rounded class="is-primary" @click="$emit('goToCollection')">Ver colección</b-button>
+    <img src="https://media.istockphoto.com/vectors/folder-icon-vector-line-symbol-vector-id953287186?k=6&m=953287186&s=170667a&w=0&h=mPNW8TMhRTNCIWDGPodiFT5CUs1Fouu0xIQORfKMvfE=" alt="">
+    <p class="title is-5 ">{{collection.title}}</p>
+    <b-button rounded expanded class="is-primary" @click="$emit('goToCollection')">Ver colección</b-button>
 
   </div>
 </template>

@@ -1,45 +1,91 @@
 <template>
   <div class="container p-5 my-3">
     <p class="title is-1">Colecciones</p>
+    <b-button
+      icon-left="plus"
+      rounded
+      class="is-primary mb-5"
+      size="is-medium"
+      @click="prompt"
+    >
+    </b-button>
+
     <div class="columns">
-      <div class="column is-one-fifth-desktop is-one-third-mobile is-mobile" v-for="(col, index) in collectionList" :key="index">
-        <collection-icon  :collection="collectionList[index]._id" @goToCollection="goToCollection(collectionList[index]._id._id)"/>
+      <div
+        class="column is-one-fifth-desktop is-one-third-mobile is-mobile"
+        v-for="(col, index) in collectionList"
+        :key="index"
+      >
+        <collection-icon
+          :collection="collectionList[index]._id"
+          @goToCollection="goToCollection(collectionList[index]._id._id)"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import CollectionIcon from '~/components/collectionIcon.vue'
-import axios from 'axios'
+import CollectionIcon from "~/components/collectionIcon.vue";
+import axios from "axios";
 export default {
   components: {
     CollectionIcon,
   },
-  async asyncData(){
+  async asyncData() {
     return {
-      collectionList: []
-    }
+      collectionList: [],
+      newCollectionTitle: "",
+      showTitleInput: false,
+    };
   },
   computed: {
-    currentUser(){
-      return this.$store.getters.currentUser
-    }
+    currentUser() {
+      return this.$store.getters.currentUser;
+    },
   },
   methods: {
-    async getCollections(){
-      const response = await axios.get('http://localhost:8080/collections', {headers: {
-        Authorization: "Bearer " + this.$store.getters.token
-      }})
-      this.collectionList = response.data
-      },
-    goToCollection(route){
-      this.$router.push(`/collections/${route}`)
-    }
+    async getCollections() {
+      const response = await axios.get("http://localhost:8080/collections", {
+        headers: {
+          Authorization: "Bearer " + this.$store.getters.token,
+        },
+      });
+      this.collectionList = response.data;
+    },
+    goToCollection(route) {
+      this.$router.push(`/collections/${route}`);
+    },
+    prompt() {
+      this.$buefy.dialog.prompt({
+        message: `Introduce el nombre de la colección: `,
+        inputAttrs: {
+          placeholder: "Colección de prueba",
+          maxlength: 10,
+        },
+        trapFocus: true,
+        onConfirm: (value) => {
+          this.$buefy.toast.open(`Colección con nombre ${value} creada`);
+          this.newCollectionTitle = value;
+          this.createCollection(value);
+        },
+      });
+    },
+    async createCollection(title) {
+      await axios.post(
+        "http://localhost:8080/collections", {title: title},
+        {
+          headers: {
+            Authorization: "Bearer " + this.$store.getters.token,
+          },
+        }
+      );
+    },
   },
-  beforeMount(){
-    this.getCollections()
-  }
+
+  beforeMount() {
+    this.getCollections();
+  },
 };
 </script>
 

@@ -28,9 +28,6 @@
           <bookCard
           v-for="(result, index) in searchResult"
           :key="index"
-          :title="searchResult[index].title"
-          :author="searchResult[index].author_name[0]"
-          :image="getImage(searchResult[index].cover_i)"
           :book="searchResult[index]"
         ></bookCard>
         </div>
@@ -49,8 +46,6 @@ export default {
       book: "",
       isbn: "",
       bookTitle: "",
-      bookImage: "",
-      bookDesc: "",
       searchResult: [],
       author: "",
       isContent: false,
@@ -87,19 +82,10 @@ export default {
         if(this.searchResult[0].length === 0){
           this.searchError = true
         }
-        console.log('searchResult array: ', this.searchResult);
       } catch (error) {
         console.error(error);
         this.searchError = true
       }
-    },
-    getImage(cover_i) {
-      this.isContent = true;
-      if (cover_i === undefined) {
-        return "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081";
-      }
-      let image = `https://covers.openlibrary.org/b/id/${cover_i}-M.jpg`;
-      return image;
     },
 
   },

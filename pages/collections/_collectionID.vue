@@ -1,6 +1,7 @@
 <template>
   <div class="container p-5 my-3">
-    <p class="title is-2">{{bookCollection.title}}</p>
+    <p class="title is-2">     <b-button @click="$router.push('/collections')" icon-left="arrow-left">Volver a colecciones</b-button>
+{{bookCollection.title}}</p>
 
     <div class="columns is-mobile">
       <div
@@ -9,8 +10,7 @@
         :key="index"
       >
         <book-pill
-          :title="book._id.title"
-          :cover="getBookImg(book._id.cover)"
+          :book="book._id"
         ></book-pill>
       </div>
     </div>

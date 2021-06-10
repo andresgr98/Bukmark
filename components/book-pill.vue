@@ -1,12 +1,10 @@
 <template>
   <div id="pill-container">
-    <img
-      :src="cover"
-      alt=""
-      id="img"
-    />
-    <p class="title is-5 is-centered">{{title}}</p>
-    <b-button class="is-danger" @click="deleteFromCollection">Eliminar de la colección</b-button>
+    <img :src="getBookImg(book.cover)" alt="" id="img" />
+    <p class="title is-5 is-centered">{{ book.title }}</p>
+    <p class="subtitle is-centered">{{ book.author }}</p>
+    <b-button class="is-danger" @click="deleteFromCollection"
+      >Eliminar de la colección</b-button>
   </div>
 </template>
 
@@ -14,14 +12,20 @@
 export default {
   name: "book-pill",
   props: {
-    title: String,
-    cover: String
+    book: Object,
   },
   methods: {
-    deleteFromCollection(){
-      this.$emit()
-    }
-  }
+    deleteFromCollection() {
+      this.$emit();
+    },
+    getBookImg(cover) {
+      if (cover === undefined || cover === "") {
+        return "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081";
+      }
+      let image = `https://covers.openlibrary.org/b/id/${cover}-M.jpg`;
+      return image;
+    },
+  },
 };
 </script>
 
@@ -38,7 +42,7 @@ export default {
   max-width: 180px;
   width: 100%;
 }
-#pill-container{
+#pill-container {
   text-align: center;
 }
 </style>

@@ -48,8 +48,8 @@ export default {
         onConfirm: (currentPage) => {
           this.$buefy.toast.open(
             `Marcador actualizado a la página: ${currentPage}`
-          );
-          this.currentPage = currentPage;
+          )
+          this.currentPage = currentPage
         },
       });
     },
