@@ -1,45 +1,47 @@
 <template>
-  <div class="tile box">
-    <div class="columns is-vcentered is-multiline">
-      <div class="column is-one-fifth" id="image-column">
-        <figure class="image">
+  <div class=" box">
+    <div class="columns is-vcentered is-multiline" expanded>
+      <div class="column is-one-sixth" id="image-column">
           <img
             :src="getImage(book.cover_i)"
             placeholder="https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081"
             id="bookImgBookCard"
           />
-        </figure>
       </div>
-      <div class="column is-two-fifths">
-        <div class="card-content">
+      <div class="column is-three-sixths ">
           <h3 class="title is-5">{{ book.title }}</h3>
-          <template v-if="book.author_name[0]">{{
+          <template v-if="book.author_name">{{
             book.author_name[0]
           }}</template>
           <template v-else>Autor desconocido</template>
-        </div>
       </div>
-      <div class="column is-two-fifths" style="textalign: center">
+      <div class="column is-two-sixths is-narrow" style="textalign: center">
         <b-field grouped>
           <b-button rounded expanded class="is-success" size="is-medium"
             >Leer</b-button
           >
         </b-field>
-        <b-field>
-          <b-button
+
+        <b-field grouped>
+          <b-select
+            placeholder="Añadir a una colección"
             rounded
-            expanded
-            class="is-warning is-light"
-            size="is-medium"
-            >Añadir a colección</b-button
+            v-model="collectionValue"
           >
-          <b-select placeholder="Selecciona una colección" rounded>
             <option
-              :value="collectionList[index]._id._id"
+              :value="collection._id._id"
               v-for="(collection, index) in collectionList"
               :key="index"
-            >{{collectionList[index]._id.title}}</option>
+            >
+              {{ collectionList[index]._id.title }}
+            </option>
           </b-select>
+          <b-button
+            rounded
+            class="is-success is-light"
+            @click="addToCollection(collectionValue)"
+            >Añadir a colección</b-button
+          >
         </b-field>
         <b-field>
           <b-button rounded expanded class="is-info is-light" size="is-medium"
@@ -52,20 +54,55 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
   name: "book-card",
   props: {
     image: String,
     book: Object,
   },
-  async asyncData(){
+  data() {
     return {
-      collectionList: []
-    }
+      collectionList: [],
+      collectionValue: ""
+    };
   },
   methods: {
-    addToCollection() {},
+    async addToCollection(value) {
+      try{
+        console.log(value)
+        let foundCollection = this.collectionList.find((item) => item._id._id === value)
+        if(!foundCollection){
+          throw new Error ("Colección no encontrada")
+
+        }
+        let bookData = {
+          title: this.book.title,
+          olid: this.book.key.replace('/works/', ''),
+          author: this.book.author_name ? this.book.author_name[0] : "Autor no encontrado",
+          isbn: this.book.isbn[0],
+          cover: this.book.cover_i,
+          publisher: this.book.publisher[0],
+          published_at: this.book.publish_date[0],
+          url: `https://openlibrary.org${this.book.key}`,
+          number_of_pages: this.book.number_of_pages
+        }
+        if(foundCollection){
+          await axios.post(`https://bukmark-api.herokuapp.com/collections/${value}`, bookData, {
+            headers: {
+              Authorization: "Bearer " + this.$store.getters.token,
+            },
+          })
+          console.log(`Libro añadido a la colección ${foundCollection._id.title}`)
+          this.$buefy.toast.open(`Libro añadido a la colección.`);
+
+          return
+        }
+        console.error("No se ha encontrado la colección")
+      }catch(error){
+        console.error(error)
+      }
+    },
     getImage(cover_i) {
       this.isContent = true;
       if (cover_i === undefined) {
@@ -75,31 +112,41 @@ export default {
       return image;
     },
     async getCollections() {
-      const response = await axios.get("http://localhost:8080/collections", {
+      const response = await axios.get("https://bukmark-api.herokuapp.com/collections", {
         headers: {
           Authorization: "Bearer " + this.$store.getters.token,
         },
       });
       this.collectionList = response.data;
-      console.log(this.collectionList)
+    },
+    alertCustom() {
+      this.$buefy.dialog.alert({
+        title: "Title Alert",
+        message: ``,
+        confirmText: "Cool!",
+      });
     },
   },
+
   computed: {
     currentUser() {
       return this.$store.getters.currentUser;
     },
   },
-  beforeMount(){
-    this.getCollections()
-  }
+  created() {
+    this.getCollections();
+
+  },
 };
 </script>
 
 <style>
 #image-column {
   vertical-align: middle;
+
 }
 #bookImgBookCard {
   border-radius: 6px;
+  height: "30px";
 }
 </style>

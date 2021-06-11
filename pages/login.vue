@@ -15,7 +15,7 @@
         >
         </b-input>
       </b-field>
-      <b-button rounded expanded class="is-primary" @click.prevent="login">Iniciar sesión</b-button>
+      <b-button rounded expanded class="is-primary" @click.prevent="login" size="is-large">Iniciar sesión</b-button>
       <b-field class="my-2">
         <h5 class="title is-5">¿No tienes una cuenta? <nuxt-link to="/register">Regístrate</nuxt-link></h5>
       </b-field>
@@ -26,6 +26,7 @@
 <script>
 export default {
   name: "LoginPage",
+  layout: 'login-register',
   head(){
     return {
       title: 'Identifícate'

@@ -2,32 +2,24 @@
 <div>
   <main-navbar />
   <nuxt />
+  <main-footer></main-footer>
 </div>
 
 </template>
 
 <script>
 import mainNavbar from "@/components/main-navbar.vue";
-
+import mainFooter from "@/components/main-footer.vue"
 export default{
+  name: 'default',
   components: {
-     mainNavbar
+     mainNavbar,
+     mainFooter
   },
   data() {
     return {
-      items: [
-        {
-          title: "Home",
-          icon: "home",
-          to: { name: "index" },
-        },
-        {
-          title: "Inspire",
-          icon: "lightbulb",
-          to: { name: "inspire" },
-        },
-      ],
-    };
+
+    }
   },
 };
 </script>

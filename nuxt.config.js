@@ -40,6 +40,7 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     'cookie-universal-nuxt',
+    
 
   ],
 
@@ -61,7 +62,7 @@ export default {
     },
   },
   env: {
-    baseURL: 'http://localhost:8080/'
+    baseURL: 'https://bukmark-api.herokuapp.com/'
   },
 
   server: {

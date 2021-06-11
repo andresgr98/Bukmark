@@ -1,10 +1,9 @@
-<template>
-  <div id="pill-container">
-    <img :src="getBookImg(book.cover)" alt="" id="img" />
+<template >
+  <div id="pill-container" v-if="book" >
+    <img :src="getBookImg(book.cover)" id="img" />
     <p class="title is-5 is-centered">{{ book.title }}</p>
     <p class="subtitle is-centered">{{ book.author }}</p>
-    <b-button class="is-danger" @click="deleteFromCollection"
-      >Eliminar de la colección</b-button>
+    <b-button class="is-danger" @click="deleteFromCollection" icon-left="delete" rounded></b-button>
   </div>
 </template>
 
@@ -19,19 +18,21 @@ export default {
       this.$emit();
     },
     getBookImg(cover) {
-      if (cover === undefined || cover === "") {
+      if (cover === undefined || cover === "" || cover === null) {
         return "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081";
       }
       let image = `https://covers.openlibrary.org/b/id/${cover}-M.jpg`;
       return image;
     },
   },
+  created(){
+      console.log(this.book)
+  }
 };
 </script>
 
 <style>
 #main-box {
-  /* background: url(https://m.media-amazon.com/images/I/51Qh9KpS2CL.jpg) no-repeat; */
   max-width: 100px;
   padding: 0;
 }

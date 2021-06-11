@@ -5,14 +5,14 @@
       <div class="columns section is-centered">
         <div class="column">
           <b-field grouped :message="{'Introduce un ISBN válido': ISBNError}" :type="{ 'is-danger': ISBNError }" label="Buscar por ISBN">
-            <b-input rounded expanded type="text" v-model="isbn"></b-input>
-            <b-button rounded @click.prevent="getBookByISBN" icon-right="magnify"></b-button>
+            <b-input rounded expanded type="text" v-model="isbn" size="is-large"></b-input>
+            <b-button rounded @click.prevent="getBookByISBN" icon-right="magnify" size="is-large"></b-button>
           </b-field>
         </div>
         <div class="column">
           <b-field grouped label="Buscar por título" :message="{'Título no encontrado. Inténtalo con otro título.': searchError}" :type="{ 'is-danger':searchError }">
-            <b-input rounded expanded type="search" v-model="bookTitle" ></b-input>
-            <b-button rounded @click.prevent="getBookByTitle" icon-right="magnify"></b-button>
+            <b-input rounded expanded type="search" v-model="bookTitle" size="is-large"></b-input>
+            <b-button rounded @click.prevent="getBookByTitle" icon-right="magnify" size="is-large"></b-button>
           </b-field>
         </div>
       </div>
@@ -76,10 +76,11 @@ export default {
         const response = await axios.get(
           `https://openlibrary.org/search.json?title=${bookTitleParsed}`
         );
-        this.searchResult = response.data.docs.slice(0, 15)
+        this.searchResult = response.data.docs//.slice(0, 15)
+        console.log(this.searchResult)
         this.isContent = true;
         this.searchError = false
-        if(this.searchResult[0].length === 0){
+        if(this.searchResult.length === 0){
           this.searchError = true
         }
       } catch (error) {

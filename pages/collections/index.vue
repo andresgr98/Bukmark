@@ -10,9 +10,9 @@
     >
     </b-button>
 
-    <div class="columns">
+    <div class="columns  is-multiline">
       <div
-        class="column is-one-fifth-desktop is-one-third-mobile is-mobile"
+        class="column is-one-fifth-desktop"
         v-for="(col, index) in collectionList"
         :key="index"
       >
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     async getCollections() {
-      const response = await axios.get("http://localhost:8080/collections", {
+      const response = await axios.get("https://bukmark-api.herokuapp.com/collections", {
         headers: {
           Authorization: "Bearer " + this.$store.getters.token,
         },
@@ -61,7 +61,7 @@ export default {
         message: `Introduce el nombre de la colección: `,
         inputAttrs: {
           placeholder: "Colección de prueba",
-          maxlength: 10,
+          maxlength: 255,
         },
         trapFocus: true,
         onConfirm: (value) => {
@@ -73,13 +73,14 @@ export default {
     },
     async createCollection(title) {
       await axios.post(
-        "http://localhost:8080/collections", {title: title},
+        "https://bukmark-api.herokuapp.com/collections", {title: title},
         {
           headers: {
             Authorization: "Bearer " + this.$store.getters.token,
           },
         }
       );
+      this.getCollections()
     },
   },
 

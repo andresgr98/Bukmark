@@ -17,16 +17,19 @@
         >
         </b-input>
       </b-field>
-      <b-button rounded expanded class="is-primary">Iniciar sesión</b-button>
+      <b-button rounded expanded class="is-primary" size="is-large">Crear cuenta</b-button>
       <b-field class="my-2">
-        <h5 class="title is-5">¿Ya tienes una cuenta? <nuxt-link to="/register">Inicia sesión</nuxt-link></h5>
+        <h5 class="title is-5">¿Ya tienes una cuenta? <nuxt-link to="/login">Inicia sesión</nuxt-link></h5>
       </b-field>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  layout: 'login-register',
+  name: 'register'
+};
 </script>
 
 <style>
