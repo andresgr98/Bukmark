@@ -5,7 +5,7 @@ class User{
 
   async register(userData){
       try {
-          const response = await this.axios.post("users", userData)
+          const response = await this.axios.post("/users", userData)
 
           return response.data
       }catch(error){

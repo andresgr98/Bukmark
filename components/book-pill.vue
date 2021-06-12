@@ -3,7 +3,7 @@
     <img :src="getBookImg(book.cover)" id="img" />
     <p class="title is-5 is-centered">{{ book.title }}</p>
     <p class="subtitle is-centered">{{ book.author }}</p>
-    <b-button class="is-danger" @click="deleteFromCollection" icon-left="delete" rounded></b-button>
+    <b-button class="is-danger" @click="$emit('remove')" icon-left="delete" rounded></b-button>
   </div>
 </template>
 
@@ -14,9 +14,6 @@ export default {
     book: Object,
   },
   methods: {
-    deleteFromCollection() {
-      this.$emit();
-    },
     getBookImg(cover) {
       if (cover === undefined || cover === "" || cover === null) {
         return "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081";

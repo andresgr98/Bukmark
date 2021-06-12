@@ -8,6 +8,14 @@
       rounded
       size="is-medium"
     ></b-button>
+    <b-button
+      @click="deleteCollection"
+      icon-left="delete"
+      id="delete-button"
+      class="is-danger"
+      rounded
+      size="is-medium"
+    >Eliminar colección</b-button>
     <p class="title is-2">{{ bookCollection.title }}</p>
 
     <div class="columns is-mobile is-multiline">
@@ -16,7 +24,7 @@
         v-for="(book, index) in bookCollection.books"
         :key="index"
       >
-      <book-pill :book="book._id" ></book-pill>
+      <book-pill :book="book._id" @remove="removeFromCollection"></book-pill>
        </div>
     </div>
   </div>
@@ -46,6 +54,33 @@ export default {
       console.log("books: ", this.bookCollection)
     },
 
+    async removeFromCollection(bookID){
+      await axios.delete(`https://bukmark-api.herokuapp.com/collections/${this.$route.params.collectionID}/books/${bookID}`,
+        {
+          headers: {
+            Authorization: "Bearer " + this.$store.getters.token,
+          },
+        }
+      )
+      this.$buefy.toast.open(`Libro eliminado de la colección.`);
+
+      this.getCollection()
+    },
+    async deleteCollection(){
+      try{
+        await axios.delete(`https://bukmark-api.herokuapp.com/collections/${this.bookCollection._id}`,
+          {
+            headers: {
+              Authorization: "Bearer " + this.$store.getters.token,
+            },
+          }
+        )
+        this.$router.push('/collections')
+      }catch(error){
+        console.error(error)
+      }
+    }
+
   },
 
   computed: {
@@ -65,6 +100,12 @@ export default {
 #back-button {
   position: fixed;
   left: 6%;
+  bottom: 10%;
+  z-index: 5;
+}
+#delete-button {
+  position: fixed;
+  right: 6%;
   bottom: 10%;
   z-index: 5;
 }

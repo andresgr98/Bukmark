@@ -40,7 +40,8 @@
             rounded
             class="is-success is-light"
             @click="addToCollection(collectionValue)"
-            >Añadir a colección</b-button
+            icon-left="plus"
+            >Añadir</b-button
           >
         </b-field>
         <b-field>
