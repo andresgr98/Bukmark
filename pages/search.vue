@@ -2,19 +2,11 @@
   <section class="container p-5 my-3">
     <p class="title is-1">Buscar</p>
     <div class="container">
-      <div class="columns section is-centered">
-        <div class="column">
-          <b-field grouped :message="{'Introduce un ISBN válido': ISBNError}" :type="{ 'is-danger': ISBNError }" label="Buscar por ISBN">
-            <b-input rounded expanded type="text" v-model="isbn" size="is-large"></b-input>
-            <b-button rounded @click.prevent="getBookByISBN" icon-right="magnify" size="is-large"></b-button>
-          </b-field>
-        </div>
-        <div class="column">
+      <div class=" section is-centered">
           <b-field grouped label="Buscar por título" :message="{'Título no encontrado. Inténtalo con otro título.': searchError}" :type="{ 'is-danger':searchError }">
             <b-input rounded expanded type="search" v-model="bookTitle" size="is-large"></b-input>
             <b-button rounded @click.prevent="getBookByTitle" icon-right="magnify" size="is-large"></b-button>
           </b-field>
-        </div>
       </div>
     </div>
 
@@ -56,20 +48,7 @@ export default {
   components: {},
 
   methods: {
-    async getBookByISBN() {
-      try {
-        const response = await axios.get(
-          `https://openlibrary.org/isbn/${this.isbn}.json`
-        );
-        this.book = response.data.title;
-        this.isContent = true;
-        this.ISBNError = false
-      } catch (error) {
-        console.error(error);
-        this.ISBNError = true
-      }
-    },
-    async getBookByTitle() {
+      async getBookByTitle() {
       try {
         let bookTitleParsed = this.bookTitle.split(" ").join("+");
         this.searchResult = [];

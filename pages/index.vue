@@ -1,72 +1,42 @@
 <template>
   <div class="container p-5 my-3">
     <p class="title is-1">Ahora leyendo</p>
-    <div class="box columns content">
-      <div class="column is-one-quarter" id="imgColumnIndex">
-        <img
-          id="bookImageIndex"
-          src="https://m.media-amazon.com/images/I/51Qh9KpS2CL.jpg"
-        />
-      </div>
-      <div class="column is-three-quarters pl-4">
-        <p class="title is-3">El Camino de los Reyes</p>
-        <p class="subtitle is-5">Brandon Sanderson</p>
-        <p>
-          SINOPSIS DEL LIBRO Lorem ipsum dolor sit, amet consectetur adipisicing
-          elit. Consequuntur ratione ab reprehenderit delectus odio sequi
-          repellat quos officia iste debitis.
-        </p>
-        <p class="title is-4">{{ currentPage }}/1102 páginas</p>
-        <b-button
-          rounded
-          label="Actualizar marcador"
-          type="is-primary"
-          size="is-large"
-          @click.prevent="promptNumber"
-        />
-      </div>
-    </div>
+    <reading-card v-for="(bookItem, index) in books" :key="index" :book="books[index]" />
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import ReadingCard from "~/components/readingCard.vue";
 export default {
-  components: {},
-  methods: {
-    promptNumber() {
-      this.$buefy.dialog.prompt({
-        message: `Introduce la página actual:`,
-        inputAttrs: {
-          type: "number",
-          placeholder: this.currentPage,
-          value: this.currentPage,
-          maxlength: 5,
-          min: 0,
-          max: this.maxPage,
-        },
-        trapFocus: true,
-        onConfirm: (currentPage) => {
-          this.$buefy.toast.open(
-            `Marcador actualizado a la página: ${currentPage}`
-          )
-          this.currentPage = currentPage
-        },
-      });
-    },
-  },
-  data() {
+  components: { ReadingCard },
+  async asyncData() {
     return {
-      currentPage: 0,
-      maxPage: 1100,
+      books: []
     };
   },
-};
+  methods: {
+    async getBooks() {
+      const response = await axios.get(`http://localhost:8080/reading`,
+        {
+          headers: {
+            Authorization: "Bearer " + this.$store.getters.token,
+          },
+        }
+      )
+      let readingCollection = response.data
+      console.log(readingCollection)
+      if (!readingCollection){
+        console.error ("No se ha encontrado la lista de lectura")
+        return
+      }
+      this.books = readingCollection.books
+    },
+  },
+  beforeMount(){
+    this.getBooks()
+  }
+}
 </script>
 <style>
-#bookImageIndex {
-  border-radius: 14px;
-}
-#imgColumnIndex {
-  vertical-align: middle;
-}
 </style>

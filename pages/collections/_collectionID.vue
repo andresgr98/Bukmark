@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     async getCollection() {
-      const response = await axios.get(`https://bukmark-api.herokuapp.com/collections/${this.$route.params.collectionID}`,
+      const response = await axios.get(`/collections/${this.$route.params.collectionID}`,
         {
           headers: {
             Authorization: "Bearer " + this.$store.getters.token,
@@ -55,7 +55,7 @@ export default {
     },
 
     async removeFromCollection(bookID){
-      await axios.delete(`https://bukmark-api.herokuapp.com/collections/${this.$route.params.collectionID}/books/${bookID}`,
+      await axios.delete(`/collections/${this.$route.params.collectionID}/books/${bookID}`,
         {
           headers: {
             Authorization: "Bearer " + this.$store.getters.token,
@@ -68,7 +68,7 @@ export default {
     },
     async deleteCollection(){
       try{
-        await axios.delete(`https://bukmark-api.herokuapp.com/collections/${this.bookCollection._id}`,
+        await axios.delete(`/collections/${this.bookCollection._id}`,
           {
             headers: {
               Authorization: "Bearer " + this.$store.getters.token,

@@ -1,23 +1,26 @@
 <template>
-  <div class=" box">
+  <div class="box">
     <div class="columns is-vcentered is-multiline" expanded>
       <div class="column is-one-sixth" id="image-column">
-          <img
-            :src="getImage(book.cover_i)"
-            placeholder="https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081"
-            id="bookImgBookCard"
-          />
+        <img
+          :src="getImage(book.cover_i)"
+          placeholder="https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081"
+          id="bookImgBookCard"
+        />
       </div>
-      <div class="column is-three-sixths ">
-          <h3 class="title is-5">{{ book.title }}</h3>
-          <template v-if="book.author_name">{{
-            book.author_name[0]
-          }}</template>
-          <template v-else>Autor desconocido</template>
+      <div class="column is-three-sixths">
+        <h3 class="title is-5">{{ book.title }}</h3>
+        <template v-if="book.author_name">{{ book.author_name[0] }}</template>
+        <template v-else>Autor desconocido</template>
       </div>
       <div class="column is-two-sixths is-narrow" style="textalign: center">
         <b-field grouped>
-          <b-button rounded expanded class="is-success" size="is-medium"
+          <b-button
+            rounded
+            expanded
+            class="is-success"
+            size="is-medium"
+            @click="readBook"
             >Leer</b-button
           >
         </b-field>
@@ -41,6 +44,7 @@
             class="is-success is-light"
             @click="addToCollection(collectionValue)"
             icon-left="plus"
+            expanded
             >Añadir</b-button
           >
         </b-field>
@@ -65,43 +69,95 @@ export default {
   data() {
     return {
       collectionList: [],
-      collectionValue: ""
+      collectionValue: "",
     };
   },
   methods: {
-    async addToCollection(value) {
-      try{
-        console.log(value)
-        let foundCollection = this.collectionList.find((item) => item._id._id === value)
-        if(!foundCollection){
-          throw new Error ("Colección no encontrada")
-
-        }
+    async readBook() {
+      try {
         let bookData = {
           title: this.book.title,
-          olid: this.book.key.replace('/works/', ''),
-          author: this.book.author_name ? this.book.author_name[0] : "Autor no encontrado",
+          olid: this.book.key.replace("/works/", ""),
+          author: this.book.author_name
+            ? this.book.author_name[0]
+            : "Autor no encontrado",
           isbn: this.book.isbn[0],
           cover: this.book.cover_i,
           publisher: this.book.publisher[0],
           published_at: this.book.publish_date[0],
           url: `https://openlibrary.org${this.book.key}`,
-          number_of_pages: this.book.number_of_pages
+          number_of_pages: 0,
+        };
+        let foundCollection = this.collectionList.find(
+          (item) => item._id.is_removable === false
+        );
+        if (!foundCollection) {
+          throw new Error("Colección no encontrada");
         }
-        if(foundCollection){
-          await axios.post(`https://bukmark-api.herokuapp.com/collections/${value}`, bookData, {
-            headers: {
-              Authorization: "Bearer " + this.$store.getters.token,
-            },
-          })
-          console.log(`Libro añadido a la colección ${foundCollection._id.title}`)
+        if (foundCollection) {
+          console.log(foundCollection);
+          await axios.post(
+            `https://bukmark-api.herokuapp.com/collections/${foundCollection._id._id}`,
+            bookData,
+            {
+              headers: {
+                Authorization: "Bearer " + this.$store.getters.token,
+              },
+            }
+          );
+          console.log(`Libro añadido a ${foundCollection._id.title}`);
+          this.$buefy.toast.open(
+            `Libro añadido a la colección ${foundCollection._id.title}`
+          );
+
+          return;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async addToCollection(value) {
+      try {
+        console.log(value);
+        let foundCollection = this.collectionList.find(
+          (item) => item._id._id === value
+        );
+        if (!foundCollection) {
+          throw new Error("Colección no encontrada");
+        }
+        let bookData = {
+          title: this.book.title,
+          olid: this.book.key.replace("/works/", ""),
+          author: this.book.author_name
+            ? this.book.author_name[0]
+            : "Autor no encontrado",
+          isbn: this.book.isbn[0],
+          cover: this.book.cover_i,
+          publisher: this.book.publisher[0],
+          published_at: this.book.publish_date[0],
+          url: `https://openlibrary.org${this.book.key}`,
+          number_of_pages: this.book.number_of_pages,
+        };
+        if (foundCollection) {
+          await axios.post(
+            `https://bukmark-api.herokuapp.com/collections/${value}`,
+            bookData,
+            {
+              headers: {
+                Authorization: "Bearer " + this.$store.getters.token,
+              },
+            }
+          );
+          console.log(
+            `Libro añadido a la colección ${foundCollection._id.title}`
+          );
           this.$buefy.toast.open(`Libro añadido a la colección.`);
 
-          return
+          return;
         }
-        console.error("No se ha encontrado la colección")
-      }catch(error){
-        console.error(error)
+        console.error("No se ha encontrado la colección");
+      } catch (error) {
+        console.error(error);
       }
     },
     getImage(cover_i) {
@@ -113,11 +169,14 @@ export default {
       return image;
     },
     async getCollections() {
-      const response = await axios.get("https://bukmark-api.herokuapp.com/collections", {
-        headers: {
-          Authorization: "Bearer " + this.$store.getters.token,
-        },
-      });
+      const response = await axios.get(
+        "https://bukmark-api.herokuapp.com/collections",
+        {
+          headers: {
+            Authorization: "Bearer " + this.$store.getters.token,
+          },
+        }
+      );
       this.collectionList = response.data;
     },
     alertCustom() {
@@ -136,7 +195,6 @@ export default {
   },
   created() {
     this.getCollections();
-
   },
 };
 </script>
@@ -144,7 +202,6 @@ export default {
 <style>
 #image-column {
   vertical-align: middle;
-
 }
 #bookImgBookCard {
   border-radius: 6px;
