@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     async getCollections() {
-      const response = await axios.get("https://bukmark-api.herokuapp.com/collections", {
+      const response = await axios.get("http://localhost:8080/collections", {
         headers: {
           Authorization: "Bearer " + this.$store.getters.token,
         },
@@ -73,7 +73,7 @@ export default {
     },
     async createCollection(title) {
       await axios.post(
-        "https://bukmark-api.herokuapp.com/collections", {title: title},
+        "http://localhost:8080/collections", {title: title},
         {
           headers: {
             Authorization: "Bearer " + this.$store.getters.token,

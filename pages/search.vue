@@ -55,8 +55,7 @@ export default {
         const response = await axios.get(
           `https://openlibrary.org/search.json?title=${bookTitleParsed}`
         );
-        this.searchResult = response.data.docs//.slice(0, 15)
-        console.log(this.searchResult)
+        this.searchResult = response.data.docs.slice(0, 15)
         this.isContent = true;
         this.searchError = false
         if(this.searchResult.length === 0){

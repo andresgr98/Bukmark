@@ -24,7 +24,7 @@
         v-for="(book, index) in bookCollection.books"
         :key="index"
       >
-      <book-pill :book="book._id" @remove="removeFromCollection"></book-pill>
+      <book-pill :book="book._id" @getBooks="getCollection"></book-pill>
        </div>
     </div>
   </div>
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     async getCollection() {
-      const response = await axios.get(`/collections/${this.$route.params.collectionID}`,
+      const response = await axios.get(`http://localhost:8080/collections/${this.$route.params.collectionID}`,
         {
           headers: {
             Authorization: "Bearer " + this.$store.getters.token,
@@ -51,24 +51,11 @@ export default {
         }
       );
       this.bookCollection = response.data;
-      console.log("books: ", this.bookCollection)
     },
 
-    async removeFromCollection(bookID){
-      await axios.delete(`/collections/${this.$route.params.collectionID}/books/${bookID}`,
-        {
-          headers: {
-            Authorization: "Bearer " + this.$store.getters.token,
-          },
-        }
-      )
-      this.$buefy.toast.open(`Libro eliminado de la colección.`);
-
-      this.getCollection()
-    },
     async deleteCollection(){
       try{
-        await axios.delete(`/collections/${this.bookCollection._id}`,
+        await axios.delete(`http://localhost:8080/collections/${this.bookCollection._id}`,
           {
             headers: {
               Authorization: "Bearer " + this.$store.getters.token,

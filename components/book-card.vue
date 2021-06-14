@@ -20,7 +20,7 @@
             expanded
             class="is-success"
             size="is-medium"
-            @click="readBook"
+            @click="promptNumberOfPages"
             >Leer</b-button
           >
         </b-field>
@@ -97,7 +97,7 @@ export default {
         if (foundCollection) {
           console.log(foundCollection);
           await axios.post(
-            `https://bukmark-api.herokuapp.com/collections/${foundCollection._id._id}`,
+            `http://localhost:8080/collections/${foundCollection._id._id}`,
             bookData,
             {
               headers: {
@@ -140,7 +140,7 @@ export default {
         };
         if (foundCollection) {
           await axios.post(
-            `https://bukmark-api.herokuapp.com/collections/${value}`,
+            `http://localhost:8080/collections/${value}`,
             bookData,
             {
               headers: {
@@ -160,6 +160,28 @@ export default {
         console.error(error);
       }
     },
+    promptNumberOfPages() {
+      this.$buefy.dialog.prompt({
+        message: `Introduce el número de paginas de este libro:`,
+        inputAttrs: {
+          type: "number",
+          placeholder: 0,
+          value: this.totalPageCount,
+          maxlength: 5,
+          min: 0,
+          max: 1000000,
+        },
+        trapFocus: true,
+        onConfirm: (currentPage) => {
+          this.$buefy.toast.open(
+            `Marcador actualizado a la página: ${currentPage}`
+          )
+          this.currentPage = currentPage
+          this.readBook()
+        },
+    })
+    },
+
     getImage(cover_i) {
       this.isContent = true;
       if (cover_i === undefined) {
@@ -170,7 +192,7 @@ export default {
     },
     async getCollections() {
       const response = await axios.get(
-        "https://bukmark-api.herokuapp.com/collections",
+        "http://localhost:8080/collections",
         {
           headers: {
             Authorization: "Bearer " + this.$store.getters.token,

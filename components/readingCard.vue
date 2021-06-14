@@ -3,7 +3,7 @@
       <div class="column is-one-quarter" id="imgColumnIndex">
         <img
           id="bookImageIndex"
-          src="https://m.media-amazon.com/images/I/51Qh9KpS2CL.jpg"
+          :src="getImage(book._id.cover)"
         />
       </div>
       <div class="column is-three-quarters pl-4">
@@ -54,6 +54,9 @@ export default {
         },
       });
     },
+    getImage(cover){
+      return `https://covers.openlibrary.org/b/id/${cover}-M.jpg`
+    }
   },
 
 }
