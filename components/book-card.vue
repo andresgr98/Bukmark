@@ -63,13 +63,13 @@ import axios from "axios";
 export default {
   name: "book-card",
   props: {
-    image: String,
     book: Object,
   },
   data() {
     return {
       collectionList: [],
       collectionValue: "",
+      totalPageCount: 0,
     };
   },
   methods: {
@@ -86,7 +86,7 @@ export default {
           publisher: this.book.publisher[0],
           published_at: this.book.publish_date[0],
           url: `https://openlibrary.org${this.book.key}`,
-          number_of_pages: 0,
+          number_of_pages: this.totalPageCount,
         };
         let foundCollection = this.collectionList.find(
           (item) => item._id.is_removable === false
@@ -109,7 +109,6 @@ export default {
           this.$buefy.toast.open(
             `Libro añadido a la colección ${foundCollection._id.title}`
           );
-
           return;
         }
       } catch (error) {
@@ -172,11 +171,12 @@ export default {
           max: 1000000,
         },
         trapFocus: true,
-        onConfirm: (currentPage) => {
+        onConfirm: (number) => {
           this.$buefy.toast.open(
-            `Marcador actualizado a la página: ${currentPage}`
+            `Número de páginas del libro establecido a ${number}`
           )
-          this.currentPage = currentPage
+          this.totalPageCount = number
+          console.log(this.totalPageCount)
           this.readBook()
         },
     })
