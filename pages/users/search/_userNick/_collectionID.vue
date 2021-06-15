@@ -15,25 +15,8 @@
       class="is-danger"
       rounded
       size="is-medium"
+      v-if="bookCollection.user === currentUser._id"
     >Eliminar colección</b-button>
-    <b-button
-      @click="changeVisibility"
-      icon-left="lock"
-      id="visibility-button"
-      class="is-danger"
-      rounded
-      size="is-medium"
-      v-if="visibility === 'public'"
-    >Hacer privada</b-button>
-    <b-button
-      @click="changeVisibility"
-      icon-left="lock"
-      id="visibility-button"
-      class="is-danger"
-      rounded
-      size="is-medium"
-      v-if="visibility === 'private'"
-    >Hacer pública</b-button>
     <p class="title is-2">{{ bookCollection.title }}</p>
 
     <div class="columns is-mobile is-multiline">
@@ -57,20 +40,18 @@ export default {
     return {
       bookCollection: {},
       bookCover: "",
-      visibility: ""
     };
   },
   methods: {
     async getCollection() {
-      const response = await axios.get(`http://localhost:8080/collections/${this.$route.params.collectionID}`,
+      const response = await axios.get(`http://localhost:8080/users/search/${this.$route.params.userNick}/collections/${this.$route.params.collectionID}`,
         {
           headers: {
             Authorization: "Bearer " + this.$store.getters.token,
           },
         }
       );
-      this.bookCollection = response.data
-      this.visibility = response.data.visibility
+      this.bookCollection = response.data;
     },
 
     async deleteCollection(){
@@ -86,34 +67,18 @@ export default {
       }catch(error){
         console.error(error)
       }
-    },
-    async changeVisibility(){
-      try{
-        this.getCollection()
-        await axios.put(`http://localhost:8080/collections/${this.bookCollection._id}`, {},
-          {
-            headers: {
-              Authorization: "Bearer " + this.$store.getters.token,
-            },
-          }
-        )
-        this.getCollection()
-      }catch(error){
-        console.error(error)
-      }
     }
 
   },
 
   computed: {
     currentUser() {
-      return this.$store.getters.currentUser
+      return this.$store.getters.currentUser;
     },
   },
 
   beforeMount() {
     this.getCollection();
-
   },
 };
 </script>
@@ -131,11 +96,4 @@ export default {
   bottom: 10%;
   z-index: 5;
 }
-#visibility-button {
-  position: fixed;
-  right: 6%;
-  bottom: 20%;
-  z-index: 5;
-}
-
 </style>

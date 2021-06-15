@@ -19,8 +19,8 @@
             <b-navbar-item tag="nuxt-link" :to="{ path: '/collections' }">
                 Colecciones
             </b-navbar-item>
-            <b-navbar-item tag="nuxt-link" :to="{ path: '/social' }">
-                Amigos
+            <b-navbar-item tag="nuxt-link" :to="{ path: '/users/search' }">
+                Usuarios
             </b-navbar-item>
         </template>
 

@@ -3,8 +3,8 @@
     <p class="title is-1">{{user.nickname}}</p>
     <p class="title is-4">Colecciones públicas</p>
     <div class="container columns" >
-      <div class="column is-one-fifth-desktop is-one-third-mobile" v-for="(collection,index) in user.collections" :key="index">
-        <collection-icon  :collection="user.collections[index]._id"/>
+      <div class="column is-one-fifth-desktop is-one-third-mobile" v-for="(collection,index) in collectionList" :key="index">
+        <collection-icon  :collection="collection._id" @goToCollection="goToCollectionPage(collection._id._id)"/>
       </div>
     </div>
   </div>
@@ -19,7 +19,8 @@ export default {
   },
   async asyncData(){
     return {
-      user: ""
+      user: "",
+      collectionList: []
     }
   },
   methods: {
@@ -30,12 +31,24 @@ export default {
         },
       })
     user = user.data
-    console.log(user.collections)
     this.user = user
+    },
+    async getCollections(){
+      let collectionList = await axios.get(`http://localhost:8080/users/search/${this.$route.params.userNick}/collections`, {
+        headers: {
+          Authorization: "Bearer " + this.$store.getters.token,
+        },
+      })
+      this.collectionList = collectionList.data
+      console.log(collectionList)
+    },
+    goToCollectionPage(route){
+      this.$router.push(`/users/search/${this.user.nickname}/${route}`)
     }
   },
   beforeMount(){
     this.getUser()
+    this.getCollections()
   }
 }
 </script>
