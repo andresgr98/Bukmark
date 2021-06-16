@@ -2,9 +2,9 @@
   <div class="container p-5 my-3">
     <p class="title is-1">Amigos</p>
     <div class="container">
-      <b-field label="Buscar usuario" grouped >
-        <b-input expanded rounded v-model="nick"></b-input>
-        <b-button @click="searchUsers(nick)"></b-button>
+      <b-field label="Buscar usuario" grouped :message="{'Usuario no encontrado. Inténtalo con otro nick.': searchError}" :type="{ 'is-danger':searchError }">
+        <b-input expanded rounded v-model="nick" size="is-large"></b-input>
+        <b-button @click="searchUsers(nick)" icon-left="magnify" size="is-large" rounded></b-button>
       </b-field>
     </div>
     <div class="container mt-5">
@@ -22,20 +22,26 @@ export default {
     return{
       userSearch: {},
       nick: "",
-      showCard: false
+      showCard: false,
+      searchError: false
     }
   },
   methods: {
     async searchUsers(nick){
-      let user = await axios.get(`http://localhost:8080/users/search/${nick}`, {
-          headers: {
-            Authorization: "Bearer " + this.$store.getters.token,
-          },
-        }
-      )
-      this.userSearch = user.data
-      this.showCard = true
-      return user
+      try{
+        let user = await axios.get(`http://localhost:8080/users/search/${nick}`, {
+            headers: {
+              Authorization: "Bearer " + this.$store.getters.token,
+            },
+          }
+        )
+        this.userSearch = user.data
+        this.showCard = true
+        this.searchError = false
+        return user
+      }catch(error){
+        this.searchError = true
+      }
     }
   }
 

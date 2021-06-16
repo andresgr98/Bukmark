@@ -33,7 +33,7 @@
                     <b-button rounded class=" is-light" tag="nuxt-link" :to="{ path: '/login' }" v-if="!isAuth">
                         Iniciar sesión
                     </b-button>
-                    <b-button rounded class=" is-light" tag="nuxt-link" :to="{ path: '/profile' }" v-if="isAuth">
+                    <b-button rounded class=" is-light is-warning" tag="nuxt-link" :to="{ path: '/profile' }" v-if="isAuth">
                         {{currentUser.firstname}}
                     </b-button>
                 </div>

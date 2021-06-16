@@ -48,11 +48,6 @@
             >Añadir</b-button
           >
         </b-field>
-        <b-field>
-          <b-button rounded expanded class="is-info is-light" size="is-medium"
-            >Ver detalles</b-button
-          >
-        </b-field>
       </div>
     </div>
   </div>
@@ -132,7 +127,7 @@ export default {
             : "Autor no encontrado",
           isbn: this.book.isbn[0],
           cover: this.book.cover_i,
-          publisher: this.book.publisher[0],
+          publisher: this.book.publisher ? this.book.publisher[0] : "no encontrado",
           published_at: this.book.publish_date[0],
           url: `https://openlibrary.org${this.book.key}`,
           number_of_pages: this.book.number_of_pages,

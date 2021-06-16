@@ -20,16 +20,16 @@
       @click="changeVisibility"
       icon-left="lock"
       id="visibility-button"
-      class="is-danger"
+      class="is-danger is-light"
       rounded
       size="is-medium"
       v-if="visibility === 'public'"
     >Hacer privada</b-button>
     <b-button
       @click="changeVisibility"
-      icon-left="lock"
+      icon-left="lock-open"
       id="visibility-button"
-      class="is-danger"
+      class="is-success is-light"
       rounded
       size="is-medium"
       v-if="visibility === 'private'"
@@ -71,6 +71,7 @@ export default {
       );
       this.bookCollection = response.data
       this.visibility = response.data.visibility
+      console.log(this.visibility)
     },
 
     async deleteCollection(){
@@ -90,13 +91,30 @@ export default {
     async changeVisibility(){
       try{
         this.getCollection()
-        await axios.put(`http://localhost:8080/collections/${this.bookCollection._id}`, {},
+        if(this.visibility === "private"){
+          let vis = {
+            visibility: "public"
+          }
+          await axios.put(`http://localhost:8080/collections/${this.bookCollection._id}`, vis,
           {
             headers: {
               Authorization: "Bearer " + this.$store.getters.token,
             },
           }
         )
+        }
+        if(this.visibility === "public"){
+          let vis = {
+            visibility: "private"
+          }
+          await axios.put(`http://localhost:8080/collections/${this.bookCollection._id}`, vis,
+          {
+            headers: {
+              Authorization: "Bearer " + this.$store.getters.token,
+            },
+          }
+        )
+        }
         this.getCollection()
       }catch(error){
         console.error(error)

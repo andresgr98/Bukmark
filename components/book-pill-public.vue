@@ -3,7 +3,6 @@
     <img :src="getBookImg(book.cover)" id="img" />
     <p class="title is-5 is-centered">{{ book.title }}</p>
     <p class="subtitle is-centered">{{ book.author }}</p>
-    <b-button class="is-danger" @click="removeFromCollection(book._id)" icon-left="delete" rounded></b-button>
   </div>
 </template>
 
@@ -27,19 +26,8 @@ export default {
       let image = `https://covers.openlibrary.org/b/id/${cover}-M.jpg`;
       return image;
     },
-    async removeFromCollection(bookID){
-      await axios.delete(`http://localhost:8080/collections/${this.$route.params.collectionID}/books/${bookID}`,
-        {
-          headers: {
-            Authorization: "Bearer " + this.$store.getters.token,
-          },
-        }
-      )
-      this.$buefy.toast.open(`Libro eliminado de la colección.`);
-
-      this.$emit('getBooks')
-    },
   },
+
 
 }
 </script>

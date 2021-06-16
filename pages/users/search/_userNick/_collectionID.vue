@@ -8,15 +8,6 @@
       rounded
       size="is-medium"
     ></b-button>
-    <b-button
-      @click="deleteCollection"
-      icon-left="delete"
-      id="delete-button"
-      class="is-danger"
-      rounded
-      size="is-medium"
-      v-if="bookCollection.user === currentUser._id"
-    >Eliminar colección</b-button>
     <p class="title is-2">{{ bookCollection.title }}</p>
 
     <div class="columns is-mobile is-multiline">
@@ -25,17 +16,17 @@
         v-for="(book, index) in bookCollection.books"
         :key="index"
       >
-      <book-pill :book="book._id" @getBooks="getCollection"></book-pill>
+      <book-pill-public :book="book._id" @getBooks="getCollection"></book-pill-public>
        </div>
     </div>
   </div>
 </template>
 
 <script>
-import bookPill from "~/components/book-pill.vue";
 import axios from "axios";
+import BookPillPublic from '~/components/book-pill-public.vue';
 export default {
-  components: { bookPill },
+  components: { BookPillPublic },
   async asyncData() {
     return {
       bookCollection: {},
