@@ -3,7 +3,7 @@
     <p class="title is-1">{{user.nickname}}</p>
     <p class="title is-4">Colecciones públicas</p>
     <div class="container columns" >
-      <div class="column is-one-fifth-desktop is-one-third-mobile" v-for="(collection,index) in collectionList" :key="index">
+      <div class="column is-one-fifth-desktop" v-for="(collection,index) in collectionList" :key="index">
         <collection-icon  :collection="collection._id" @goToCollection="goToCollectionPage(collection._id._id)"/>
       </div>
     </div>
