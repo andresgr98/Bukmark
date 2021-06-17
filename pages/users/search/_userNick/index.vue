@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     async getUser(){
-      let user = await axios.get(`http://localhost:8080/users/search/${this.$route.params.userNick}`, {
+      let user = await axios.get(`/users/search/${this.$route.params.userNick}`, {
         headers: {
           Authorization: "Bearer " + this.$store.getters.token,
         },
@@ -34,7 +34,7 @@ export default {
     this.user = user
     },
     async getCollections(){
-      let collectionList = await axios.get(`http://localhost:8080/users/search/${this.$route.params.userNick}/collections`, {
+      let collectionList = await axios.get(`/users/search/${this.$route.params.userNick}/collections`, {
         headers: {
           Authorization: "Bearer " + this.$store.getters.token,
         },

@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     async getCollection() {
-      const response = await axios.get(`http://localhost:8080/users/search/${this.$route.params.userNick}/collections/${this.$route.params.collectionID}`,
+      const response = await axios.get(`/users/search/${this.$route.params.userNick}/collections/${this.$route.params.collectionID}`,
         {
           headers: {
             Authorization: "Bearer " + this.$store.getters.token,
@@ -47,7 +47,7 @@ export default {
 
     async deleteCollection(){
       try{
-        await axios.delete(`http://localhost:8080/collections/${this.bookCollection._id}`,
+        await axios.delete(`/collections/${this.bookCollection._id}`,
           {
             headers: {
               Authorization: "Bearer " + this.$store.getters.token,
