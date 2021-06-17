@@ -2,29 +2,31 @@
   <div class="container p-5 my-3">
     <p class="title is-1">Crear cuenta</p>
     <div class="container">
-      <b-field label="Nombre">
-        <b-input placeholder="" rounded v-model="firstname"></b-input>
+      <b-field label="Nombre" :message="{'Usuario y/o contraseña incorrectos.' : hasErrors}" :type="{ 'is-danger':hasErrors }">
+        <b-input placeholder="" rounded v-model="firstname" required></b-input>
       </b-field>
-      <b-field label="Apellidos">
-        <b-input placeholder="" rounded v-model="lastname"></b-input>
+      <b-field label="Apellidos" :message="{'Usuario y/o contraseña incorrectos.' : hasErrors}" :type="{ 'is-danger':hasErrors }">
+        <b-input placeholder="" rounded v-model="lastname" required></b-input>
       </b-field>
-      <b-field label="Nombre de usuario">
-        <b-input placeholder="@" rounded v-model="nickname"></b-input>
+      <b-field label="Nombre de usuario" :message="{'Usuario y/o contraseña incorrectos.' : hasErrors}" :type="{ 'is-danger':hasErrors }">
+        <b-input placeholder="@" rounded v-model="nickname" required></b-input>
       </b-field>
-      <b-field label="Correo electrónico">
+      <b-field label="Correo electrónico" :message="{'Usuario y/o contraseña incorrectos.' : hasErrors}" :type="{ 'is-danger':hasErrors }">
         <b-input
           placeholder="ejemplo@ejemplo.com"
           rounded
           v-model="email"
+          required
         ></b-input>
       </b-field>
-      <b-field label="Contraseña">
+      <b-field label="Contraseña" :message="{'Usuario y/o contraseña incorrectos.' : hasErrors}" :type="{ 'is-danger':hasErrors }">
         <b-input
           type="password"
           placeholder="Escribe tu contraseña..."
           password-reveal
           rounded
           v-model="password"
+          required
         >
         </b-input>
       </b-field>
@@ -77,6 +79,7 @@ export default {
           lastname: this.lastname
         };
         await this.$api.users.register(newUserData);
+        this.hasErrors = false;
         this.$router.push("/login");
       } catch (error) {
         console.warn(error);

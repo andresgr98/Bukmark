@@ -19,6 +19,7 @@
       <b-field class="my-2">
         <h5 class="title is-5">¿No tienes una cuenta? <nuxt-link to="/register">Regístrate</nuxt-link></h5>
       </b-field>
+
     </div>
   </div>
 </template>
@@ -27,6 +28,8 @@
 export default {
   name: "LoginPage",
   layout: 'login-register',
+  components: {
+  },
   head(){
     return {
       title: 'Identifícate'

@@ -9,12 +9,10 @@
 
 <script>
 import mainNavbar from "@/components/main-navbar.vue";
-import mainFooter from "@/components/main-footer.vue"
 export default{
   name: 'default',
   components: {
-     mainNavbar,
-     mainFooter
+    mainNavbar,
   },
   data() {
     return {

@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     async getCollection() {
-      const response = await axios.get(`http://localhost:8080/collections/${this.$route.params.collectionID}`,
+      const response = await axios.get(`/collections/${this.$route.params.collectionID}`,
         {
           headers: {
             Authorization: "Bearer " + this.$store.getters.token,
@@ -76,7 +76,7 @@ export default {
 
     async deleteCollection(){
       try{
-        await axios.delete(`http://localhost:8080/collections/${this.bookCollection._id}`,
+        await axios.delete(`/collections/${this.bookCollection._id}`,
           {
             headers: {
               Authorization: "Bearer " + this.$store.getters.token,
@@ -95,7 +95,7 @@ export default {
           let vis = {
             visibility: "public"
           }
-          await axios.put(`http://localhost:8080/collections/${this.bookCollection._id}`, vis,
+          await axios.put(`/collections/${this.bookCollection._id}`, vis,
           {
             headers: {
               Authorization: "Bearer " + this.$store.getters.token,
@@ -107,7 +107,7 @@ export default {
           let vis = {
             visibility: "private"
           }
-          await axios.put(`http://localhost:8080/collections/${this.bookCollection._id}`, vis,
+          await axios.put(`/collections/${this.bookCollection._id}`, vis,
           {
             headers: {
               Authorization: "Bearer " + this.$store.getters.token,

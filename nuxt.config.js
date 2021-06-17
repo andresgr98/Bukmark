@@ -20,7 +20,6 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/api/index.js',
-    //{src: '~/plugins/vue-cookie-law', mode: 'client'}
   ],
 
 
@@ -40,7 +39,7 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     'cookie-universal-nuxt',
-    
+
 
   ],
 

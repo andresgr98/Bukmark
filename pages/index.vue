@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     async getBooks() {
-      const response = await axios.get(`http://localhost:8080/reading`,
+      const response = await axios.get(`/reading`,
         {
           headers: {
             Authorization: "Bearer " + this.$store.getters.token,

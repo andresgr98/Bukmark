@@ -28,7 +28,7 @@ export default {
       return image;
     },
     async removeFromCollection(bookID){
-      await axios.delete(`http://localhost:8080/collections/${this.$route.params.collectionID}/books/${bookID}`,
+      await axios.delete(`/collections/${this.$route.params.collectionID}/books/${bookID}`,
         {
           headers: {
             Authorization: "Bearer " + this.$store.getters.token,

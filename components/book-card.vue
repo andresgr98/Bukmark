@@ -92,7 +92,7 @@ export default {
         if (foundCollection) {
           console.log(foundCollection);
           await axios.post(
-            `http://localhost:8080/collections/${foundCollection._id._id}`,
+            `/collections/${foundCollection._id._id}`,
             bookData,
             {
               headers: {
@@ -134,7 +134,7 @@ export default {
         };
         if (foundCollection) {
           await axios.post(
-            `http://localhost:8080/collections/${value}`,
+            `/collections/${value}`,
             bookData,
             {
               headers: {
@@ -187,7 +187,7 @@ export default {
     },
     async getCollections() {
       const response = await axios.get(
-        "http://localhost:8080/collections",
+        "/collections",
         {
           headers: {
             Authorization: "Bearer " + this.$store.getters.token,

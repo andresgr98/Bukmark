@@ -29,7 +29,7 @@ export default {
   methods: {
     async searchUsers(nick){
       try{
-        let user = await axios.get(`http://localhost:8080/users/search/${nick}`, {
+        let user = await axios.get(`/users/search/${nick}`, {
             headers: {
               Authorization: "Bearer " + this.$store.getters.token,
             },

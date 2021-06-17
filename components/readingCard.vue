@@ -9,7 +9,7 @@
       <div class="column is-three-quarters pl-4">
         <p class="title is-3">{{book._id.title}}</p>
         <p class="subtitle is-5">{{book._id.author}}</p>
-        <p class="title is-4">{{ currentPage }}/1102 páginas</p>
+        <p class="title is-4">45/348 páginas</p>
         <b-button
           rounded
           label="Actualizar marcador"

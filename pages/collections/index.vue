@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     async getCollections() {
-      const response = await axios.get("http://localhost:8080/collections", {
+      const response = await axios.get("/collections", {
         headers: {
           Authorization: "Bearer " + this.$store.getters.token,
         },
@@ -74,7 +74,7 @@ export default {
     },
     async createCollection(title) {
       await axios.post(
-        "http://localhost:8080/collections", {title: title},
+        "/collections", {title: title},
         {
           headers: {
             Authorization: "Bearer " + this.$store.getters.token,

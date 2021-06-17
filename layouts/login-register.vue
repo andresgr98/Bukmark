@@ -4,6 +4,7 @@
       <img src="@/static/logo-large.png"  class="login-layout" style="margin:auto"/>
     </div>
     <nuxt />
+    
   </div>
 </template>
 
