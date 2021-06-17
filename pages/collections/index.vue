@@ -17,8 +17,9 @@
         :key="index"
       >
         <collection-icon
-          :collection="collectionList[index]._id"
-          @goToCollection="goToCollection(collectionList[index]._id._id)"
+          :collection="col._id"
+          v-if="col._id !== null"
+          @goToCollection="goToCollection(col._id._id)"
         />
       </div>
     </div>

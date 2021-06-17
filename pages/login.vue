@@ -2,10 +2,10 @@
   <div class="container p-5 my-3">
     <p class="title is-1">Iniciar sesión</p>
     <div class="container">
-      <b-field label="Nombre de usuario">
+      <b-field label="Nombre de usuario" :message="{'Usuario y/o contraseña incorrectos.' : hasErrors}" :type="{ 'is-danger':hasErrors }">
         <b-input placeholder="@" rounded v-model="nickname"></b-input>
       </b-field>
-      <b-field label="Contraseña">
+      <b-field label="Contraseña" :message="{'Usuario y/o contraseña incorrectos.' : hasErrors}" :type="{ 'is-danger':hasErrors }">
         <b-input
           type="password"
           placeholder="Escribe tu contraseña..."
@@ -43,23 +43,13 @@ export default {
   methods: {
     async login() {
       try {
-
         this.validForm()
-
-        const credentials = {
-          nickname: this.nickname,
-          password: this.password,
-        }
-
         const response = await this.$api.auth.login(this.nickname, this.password)
-
         const token = response.token
-
+        this.hasErrors = false
         this.$store.dispatch('login', token)
-
         this.$router.push("/")
       } catch (error) {
-        this.errorMessage = error.message
         this.hasErrors = true
       }
     },
