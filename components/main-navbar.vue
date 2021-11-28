@@ -3,7 +3,7 @@
         <template #brand>
             <b-navbar-item tag="nuxt-link" :to="{ path: '/' }">
                 <img
-                    src="@/static/icon.png"
+                    src="@/static/logo.png"
                     alt="icono Bukmark"
                 >
                 <p class="title is-4" id="main-title-navbar">&nbsp;Bukmark</p>

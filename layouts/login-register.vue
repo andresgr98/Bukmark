@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <div class="mt-6" id="header-section">
-      <img src="@/static/logo-large.png"  class="login-layout" style="margin:auto"/>
+      <img src="@/static/logo-large-2.png"  class="login-layout" style="margin:auto"/>
     </div>
     <nuxt />
-    
+
   </div>
 </template>
 

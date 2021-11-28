@@ -56,8 +56,8 @@ export default {
       lang: 'es'
     },
     icon: {
-      source: "@/static/icon.png",
-      fileName: "icon.png"
+      source: "@/static/logo.png",
+      fileName: "logo.png"
     },
   },
   env: {
